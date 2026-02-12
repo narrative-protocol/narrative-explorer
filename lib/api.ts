@@ -11,8 +11,10 @@ async function fetchAPI<T>(
     });
   }
   const res = await fetch(url.toString(), { next: { revalidate: 30 } });
+
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   const json = await res.json();
+  console.log(json);
   if (!json.success) throw new Error(json.error || "Unknown API error");
   return json.data;
 }
@@ -159,6 +161,11 @@ export interface EventDetail {
     executedAt: string;
     executedBy: number;
   };
+  llm?: {
+    model: string;
+    request: string;
+    response: string;
+  };
   attestation: {
     signature: string;
     signingAddress: string;
@@ -171,7 +178,11 @@ export interface EventDetail {
       eventRecordPda: string;
       explorerUrl: string;
     } | null;
-    near: { txHash: string; explorerUrl: string } | null;
+    near: {
+      txHash: string;
+      receiptId?: string;
+      explorerUrl: string;
+    } | null;
   };
 }
 
