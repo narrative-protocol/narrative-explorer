@@ -1,38 +1,54 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Breadcrumbs, ChainBadge, ModeBadge, EmptyState } from "@/components/explorer-shared"
-import { Boxes, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
-import type { DeploymentSummary, Paginated } from "@/lib/api"
+import Link from "next/link";
+import {
+  Breadcrumbs,
+  ChainBadge,
+  ModeBadge,
+  EmptyState,
+} from "@/components/explorer-shared";
+import { truncateAddress } from "@/lib/utils";
+import { Boxes, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import type { DeploymentSummary, Paginated } from "@/lib/api";
 
 export function DeploymentsListContent({
   result,
   error,
   currentPage,
 }: {
-  result: Paginated<DeploymentSummary> | null
-  error: string | null
-  currentPage: number
+  result: Paginated<DeploymentSummary> | null;
+  error: string | null;
+  currentPage: number;
 }) {
   return (
     <div className="space-y-6">
-      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Deployments" }]} />
+      <Breadcrumbs
+        items={[{ label: "Home", href: "/" }, { label: "Deployments" }]}
+      />
 
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Deployments</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Public deployments across all worlds</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Public deployments across all worlds
+          </p>
         </div>
         {result && (
-          <span className="text-sm text-muted-foreground">{result.pagination.total} deployments</span>
+          <span className="text-sm text-muted-foreground">
+            {result.pagination.total} deployments
+          </span>
         )}
       </div>
 
       {error && (
-        <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">{error}</div>
+        <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">
+          {error}
+        </div>
       )}
 
-      {result && result.data.length === 0 && <EmptyState message="No public deployments found" />}
+      {result && result.data.length === 0 && (
+        <EmptyState message="No public deployments found" />
+      )}
 
       {result && result.data.length > 0 && (
         <>
@@ -40,35 +56,75 @@ export function DeploymentsListContent({
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border bg-secondary/50">
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Name</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">World</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Chain</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Mode</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">Created</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Name
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Address
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    World
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Chain
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Mode
+                  </th>
+                  <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Created
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
                 {result.data.map((dep) => (
-                  <tr key={dep.id} className="transition-colors hover:bg-secondary/30">
+                  <tr
+                    key={dep.id}
+                    className="transition-colors hover:bg-secondary/30"
+                  >
                     <td className="px-4 py-3">
-                      <Link href={`/deployments/${dep.id}`} className="flex items-center gap-2 font-semibold text-foreground hover:text-primary">
+                      <Link
+                        href={`/deployments/${dep.id}`}
+                        className="flex items-center gap-2 font-semibold text-foreground hover:text-primary"
+                      >
                         <Boxes className="h-4 w-4 text-primary" />
                         {dep.name}
                       </Link>
                     </td>
                     <td className="px-4 py-3">
+                      {dep.address ? (
+                        <span
+                          className="font-mono text-xs text-muted-foreground"
+                          title={dep.address}
+                        >
+                          {truncateAddress(dep.address)}
+                        </span>
+                      ) : (
+                        <span className="text-muted-foreground">--</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
                       {dep.worldId ? (
-                        <Link href={`/worlds/${dep.worldId}`} className="text-muted-foreground hover:text-primary">
+                        <Link
+                          href={`/worlds/${dep.worldId}`}
+                          className="text-muted-foreground hover:text-primary"
+                        >
                           {dep.worldName}
                         </Link>
                       ) : (
                         <span className="text-muted-foreground">--</span>
                       )}
                     </td>
-                    <td className="px-4 py-3"><ChainBadge chain={dep.targetChain} /></td>
-                    <td className="px-4 py-3"><ModeBadge mode={dep.mode} /></td>
+                    <td className="px-4 py-3">
+                      <ChainBadge chain={dep.targetChain} />
+                    </td>
+                    <td className="px-4 py-3">
+                      <ModeBadge mode={dep.mode} />
+                    </td>
                     <td className="px-4 py-3 text-right text-muted-foreground">
-                      {dep.createdAt ? new Date(dep.createdAt).toLocaleDateString() : "--"}
+                      {dep.createdAt
+                        ? new Date(dep.createdAt).toLocaleDateString()
+                        : "--"}
                     </td>
                   </tr>
                 ))}
@@ -102,5 +158,5 @@ export function DeploymentsListContent({
         </>
       )}
     </div>
-  )
+  );
 }

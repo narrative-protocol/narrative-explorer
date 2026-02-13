@@ -15,6 +15,7 @@ import {
   TimeAgo,
   EmptyState,
 } from "@/components/explorer-shared";
+import { truncateAddress } from "@/lib/utils";
 import type { GlobalStats } from "@/lib/api";
 
 export function HomeContent({
@@ -143,6 +144,14 @@ export function HomeContent({
                       >
                         {item.worldName}
                       </Link>
+                      {item.worldAddress && (
+                        <p
+                          className="mt-0.5 font-mono text-xs text-muted-foreground"
+                          title={item.worldAddress}
+                        >
+                          {truncateAddress(item.worldAddress)}
+                        </p>
+                      )}
                     </td>
                     <td className="px-4 py-3">
                       <Link
@@ -151,6 +160,14 @@ export function HomeContent({
                       >
                         {item.deploymentName}
                       </Link>
+                      {item.deploymentAddress && (
+                        <p
+                          className="mt-0.5 font-mono text-xs text-muted-foreground"
+                          title={item.deploymentAddress}
+                        >
+                          {truncateAddress(item.deploymentAddress)}
+                        </p>
+                      )}
                     </td>
                     <td className="px-4 py-3">
                       <AttestationIndicator
@@ -189,9 +206,8 @@ function HeroBanner() {
           Narrative Protocol Explorer
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          Browse public game worlds, track deployment events, verify on-chain
-          attestations, and inspect entity state changes across the Narrative
-          Protocol ecosystem.
+          Browse worlds, deployments, events, verify attestations, and inspect
+          entity state changes across the Narrative Protocol.
         </p>
       </div>
     </div>

@@ -14,7 +14,7 @@ async function fetchAPI<T>(
 
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   const json = await res.json();
-  console.log(json);
+
   if (!json.success) throw new Error(json.error || "Unknown API error");
   return json.data;
 }
@@ -34,8 +34,10 @@ export interface RecentActivity {
   eventName: string;
   deploymentId: number;
   deploymentName: string;
+  deploymentAddress: string;
   worldId: number;
   worldName: string;
+  worldAddress: string;
   executedAt: string;
   hasAttestation: boolean;
   hasSolanaTx: boolean;
@@ -44,6 +46,7 @@ export interface RecentActivity {
 
 export interface WorldSummary {
   id: number;
+  address: string;
   name: string;
   description: string;
   domainTags: string[];
@@ -53,6 +56,7 @@ export interface WorldSummary {
 
 export interface WorldDetail {
   id: number;
+  address: string;
   name: string;
   description: string;
   domainTags: string[];
@@ -86,6 +90,7 @@ export interface WorldEvent {
 
 export interface DeploymentSummary {
   id: number;
+  address: string;
   name: string;
   description?: string;
   mode: string;
@@ -97,6 +102,7 @@ export interface DeploymentSummary {
 
 export interface DeploymentDetail {
   id: number;
+  address: string;
   name: string;
   mode: string;
   targetChain: string;
