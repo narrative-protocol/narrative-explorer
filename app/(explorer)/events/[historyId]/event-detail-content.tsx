@@ -206,41 +206,51 @@ export function EventDetailContent({
         <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
           <FileCode2 className="h-4 w-4" /> Schemas
         </h2>
-        <div className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-lg border border-border bg-card p-4">
-            <h3 className="mb-2 text-xs font-medium text-muted-foreground">
-              Input Schema
-            </h3>
-            <JsonBlock data={data.eventVersion.inputSchema} />
+        <div className="flex flex-col lg:flex-row gap-4">
+          <div className=" w-full lg:w-1/3">
+            <div className="rounded-lg border border-border bg-card p-4">
+              <h3 className="mb-2 text-xs font-medium text-muted-foreground">
+                Input Schema
+              </h3>
+              <JsonBlock data={data.eventVersion.inputSchema} />
+            </div>
           </div>
-          <div className="rounded-lg border border-border bg-card p-4">
-            <h3 className="mb-2 text-xs font-medium text-muted-foreground">
-              Result Schema
-            </h3>
-            <JsonBlock data={data.eventVersion.resultSchema} />
+          <div className="w-full lg:w-1/3">
+            <div className="rounded-lg border border-border bg-card p-4 ">
+              <h3 className="mb-2 text-xs font-medium text-muted-foreground">
+                Result Schema
+              </h3>
+              <JsonBlock data={data.eventVersion.resultSchema} />
+            </div>
           </div>
-          <div className="rounded-lg border border-border bg-card p-4">
-            <h3 className="mb-2 text-xs font-medium text-muted-foreground">
-              State Change Schema
-            </h3>
-            <JsonBlock data={data.eventVersion.stateChangeSchema} />
+          <div className=" w-full lg:w-1/3">
+            <div className="rounded-lg border border-border bg-card p-4">
+              <h3 className="mb-2 text-xs font-medium text-muted-foreground">
+                State Change Schema
+              </h3>
+              <JsonBlock data={data.eventVersion.stateChangeSchema} />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Execution Data */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        <section>
+      <div className="flex flex-col lg:flex-row gap-6">
+        <section className="w-full lg:w-1/2">
           <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             <ArrowRightLeft className="h-4 w-4" /> Input
           </h2>
-          <JsonBlock data={data.execution.input} />
+          <div className="rounded-lg border border-border bg-card p-4">
+            <JsonBlock data={data.execution.input} />
+          </div>
         </section>
-        <section>
+        <section className="w-full lg:w-1/2">
           <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             <CheckCircle2 className="h-4 w-4" /> Result
           </h2>
-          <JsonBlock data={data.execution.result} />
+          <div className="rounded-lg border border-border bg-card p-4">
+            <JsonBlock data={data.execution.result} />
+          </div>
         </section>
       </div>
 
@@ -251,7 +261,9 @@ export function EventDetailContent({
             <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
               <ArrowRightLeft className="h-4 w-4" /> State Changes
             </h2>
-            <JsonBlock data={data.execution.stateChanges} />
+            <div className="rounded-lg border border-border bg-card p-4">
+              <JsonBlock data={data.execution.stateChanges} />
+            </div>
           </section>
         )}
 
