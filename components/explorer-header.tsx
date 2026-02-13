@@ -21,6 +21,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const navLinks = [
   { href: "/", label: "Home", icon: Globe },
@@ -97,10 +98,13 @@ export function ExplorerHeader() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3">
         <div className="flex min-w-0 items-center gap-2 lg:gap-8 shrink-0">
           <Link href="/" className="flex items-center gap-2 shrink-0">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
-              <span className="text-sm font-bold text-primary-foreground">
-                N
-              </span>
+            <div className="flex h-8 w-8 items-center justify-center rounded-md">
+              <Image
+                src={"/logo.svg"}
+                alt="Narrative Explorer"
+                width={32}
+                height={32}
+              />
             </div>
             <span className="text-lg font-semibold text-foreground truncate">
               Narrative <span className="text-primary">Explorer</span>
