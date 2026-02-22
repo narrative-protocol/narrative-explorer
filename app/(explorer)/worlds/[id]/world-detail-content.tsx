@@ -187,7 +187,9 @@ export function WorldDetailContent({
                     </p>
                   )}
                   <div className="mt-2 flex items-center gap-2">
-                    <ChainBadge chain={dep.targetChain} />
+                    {dep.targetChains?.map((chain) => (
+                      <ChainBadge key={chain} chain={chain} />
+                    ))}
                     <ModeBadge mode={dep.mode} />
                   </div>
                 </div>

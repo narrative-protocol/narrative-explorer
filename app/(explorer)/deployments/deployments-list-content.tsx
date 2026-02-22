@@ -116,7 +116,15 @@ export function DeploymentsListContent({
                       )}
                     </td>
                     <td className="px-4 py-3">
-                      <ChainBadge chain={dep.targetChain} />
+                      <div className="flex flex-wrap gap-1">
+                        {dep.targetChains?.map((chain) => (
+                          <ChainBadge key={chain} chain={chain} />
+                        ))}
+                        {(!dep.targetChains ||
+                          dep.targetChains.length === 0) && (
+                          <span className="text-muted-foreground">--</span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-3">
                       <ModeBadge mode={dep.mode} />

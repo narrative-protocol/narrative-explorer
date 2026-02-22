@@ -92,12 +92,14 @@ export interface DeploymentSummary {
   id: number;
   address: string;
   name: string;
-  description?: string;
+  description: string | null;
   mode: string;
-  targetChain: string;
-  worldId?: number;
-  worldName?: string;
-  createdAt?: string;
+  targetChains: string[];
+  isLLMPublic: boolean;
+  worldId: number;
+  worldAddress: string;
+  worldName: string;
+  createdAt: string;
 }
 
 export interface DeploymentDetail {
@@ -271,11 +273,13 @@ export async function getDeployments(
   page = 1,
   limit = 20
 ): Promise<Paginated<DeploymentSummary>> {
-  const data = await fetch(
+  const res = await fetch(
     `${BASE_URL}/deployments?page=${page}&limit=${limit}`,
     { next: { revalidate: 60 } }
   );
-  const json = await data.json();
+  const json = await res.json();
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  if (!json.success) throw new Error(json.error || "Unknown API error");
   return { data: json.data, pagination: json.pagination };
 }
 
