@@ -28,7 +28,6 @@ const navLinks = [
   { href: "/worlds", label: "Worlds", icon: Boxes },
   { href: "/deployments", label: "Deployments", icon: FileCode2 },
   { href: "/events", label: "Events", icon: Activity },
-  { href: "/tx", label: "Tx Lookup", icon: Link2 },
 ];
 
 function NavLinks({
