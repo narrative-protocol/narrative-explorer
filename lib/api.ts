@@ -1,4 +1,4 @@
-const BASE_URL = "https://api-testing-uhuy.dekat.tech/api/explorer";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 async function fetchAPI<T>(
   path: string,
